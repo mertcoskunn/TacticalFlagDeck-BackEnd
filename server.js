@@ -13,7 +13,8 @@ mongoose.connect(keys.mongoURI);
 
 require('./models/Account');
 
-require('./routes/authRoutes')(app);
+require('./routes/signInRoute.js')(app);
+require('./routes/signUpRoute.js')(app);
 
 
 
