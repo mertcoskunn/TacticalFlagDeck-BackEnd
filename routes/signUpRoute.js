@@ -5,7 +5,6 @@ const Account = mongoose.model('accountSchema');
 module.exports = app =>{
 
 app.post('/signup', async (req, res) => {
-    console.log(req.body);
 
     const rUsername = req.body.username; 
     const rPassword = req.body.password; 

@@ -5,7 +5,6 @@ const Account = mongoose.model('accountSchema');
 module.exports = app =>{
 
 app.post('/signin', async (req, res) => {
-    console.log(req.body);
 
     const rUsername = req.body.username; 
     const rPassword = req.body.password; 
@@ -14,15 +13,14 @@ app.post('/signin', async (req, res) => {
     
     if(userAccount == null )
     {
-        userAccount.lastAuthentication = Date.now();
-        await userAccount.save();
+        
         res.json({ token:null ,isSuccess: false});
-        console.log("Hesap yok");
+        console.log("User not found");
     }
     else
     {
         res.json({token:null, isSuccess: true});
-        console.log("Hesap var");
+        console.log("User found");
     } 
 
 });
