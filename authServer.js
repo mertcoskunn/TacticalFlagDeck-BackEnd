@@ -1,7 +1,12 @@
 const express = require('express');
 const keys = require('./config/keys.js');
+const cors = require('cors');
 
 const app = express();
+
+
+
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -18,10 +23,9 @@ require('./routes/signUpRoute.js')(app);
 
 
 
-const port = 13756;
 
-app.listen(port, ()=>{
-    console.log("Listening on "+ port); 
+app.listen(keys.auth_port, ()=>{
+    console.log("Listening on "+ keys.auth_port); 
 }); 
 
 

@@ -1,11 +1,22 @@
+const express = require('express');
+const keys = require('./config/keys.js');
+const http = require('http');
 const WebSocket = require('ws');
 
-const matchmakingServer = new WebSocket.Server({ port: 3000 });
-let matchServerConnection = null;
+const app = express();
+
+app.get("/", (req, res) => {
+    res.send("WebSocket server is running.");
+});
+
+const server = http.createServer(app);
+
+const wss = new WebSocket.Server({ server });
+
 let matches = {}; 
 
 
-matchmakingServer.on('connection', (ws) => {
+wss.on('connection', (ws) => {
     console.log('Player connected');
 
     ws.on('message', (message) => {
@@ -60,4 +71,10 @@ matchmakingServer.on('connection', (ws) => {
         
     }
     );
+});
+
+
+const PORT = keys.matchMaking_port;
+server.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
 });
