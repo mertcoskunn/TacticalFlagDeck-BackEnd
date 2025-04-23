@@ -1,9 +1,20 @@
+const express = require('express');
+const keys = require('./config/keys.js');
+const http = require('http');
 const WebSocket = require('ws');
 
-const matchServer = new WebSocket.Server({ port: 4000 });
+const app = express();
+
+app.get("/", (req, res) => {
+    res.send("WebSocket server is running.");
+});
+
+const server = http.createServer(app);
+
+const wss = new WebSocket.Server({ server });
 let matches = {}; 
 
-matchServer.on('connection', (ws) => {
+wss.on('connection', (ws) => {
     ws.send(JSON.stringify({
         type: 'match_connection_ready'
     }
@@ -123,6 +134,11 @@ matchServer.on('connection', (ws) => {
 
 });
 
+
+const PORT = keys.match_port;
+server.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+});
 
 function broadcastToMatch(match, json_msg) {
 
